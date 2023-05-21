@@ -2,9 +2,9 @@ name: Build
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - master
+  #push:
+  #  branches:
+  #    - master
 
 jobs:
   build:
@@ -34,7 +34,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
           tag_name: 'v${{ env.PROJECT_VERSION }}'
-          release_name: GlowItem
+          release_name: 'GlowItem v${{ env.PROJECT_VERSION }}'
           draft: false
           prerelease: false
 
