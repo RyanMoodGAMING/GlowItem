@@ -1,0 +1,4 @@
+name: GlowItem
+version: '${project.version}'
+main: me.ryanmood.glowitem.GlowItem
+api-version: 1.19
