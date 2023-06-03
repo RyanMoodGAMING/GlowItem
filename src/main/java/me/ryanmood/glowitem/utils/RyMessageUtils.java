@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,13 +22,13 @@ import java.util.stream.Collectors;
 public class RyMessageUtils {
 
     @Getter
-    private static String prefix = "&dGlowItem &7» &f";
+    private final static String prefix = "&dGlowItem &7» &f";
     @Getter
-    private static String errorPrefix = "&cError &7» &c";
+    private final static String errorPrefix = "&cError &7» &c";
     @Getter
-    private static String breaker = "&7&m------------------------------------";
+    private final static String breaker = "&7&m------------------------------------";
 
-    private static String translate(Player player, String message) {
+    public static @NotNull String translate(Player player, String message) {
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             String PAPI = PlaceholderAPI.setPlaceholders(player, message)
                     .replace("%prefix%", getPrefix())
@@ -42,45 +43,13 @@ public class RyMessageUtils {
 
     }
 
-    public static String translate(String message) {
+    public static @NotNull String translate(String message) {
         return HEXUtils.colorify(message)
                 .replace("%prefix%", getPrefix());
     }
 
-    private static List<String> translate(List<String> source) {
-        return source.stream().map(RyMessageUtils::translate).collect(Collectors.toList());
-    }
-
-    public static void sendPlayer(Player player, String message) {
+    public static void sendPlayer(@NotNull Player player, String message) {
         player.sendMessage(translate(player, message));
-    }
-
-    public static void sendPlayer(Player player, String... messages) {
-        for (String message : messages) {
-            player.sendMessage(translate(player, message));
-        }
-    }
-
-    public static void sendPlayer(Player player, List<String> messages) {
-        for (String message : messages) {
-            player.sendMessage(translate(player, message));
-        }
-    }
-
-    public static void sendSender(CommandSender sender, String message) {
-        sender.sendMessage(translate(message));
-    }
-
-    public static void sendSender(CommandSender sender, String... messages) {
-        for (String message : messages) {
-            sender.sendMessage(translate(message));
-        }
-    }
-
-    public static void sendSender(CommandSender sender, List<String> messages) {
-        for (String message : messages) {
-            sender.sendMessage(translate(message));
-        }
     }
 
     public static void sendConsole(boolean prefix, String message) {
@@ -103,39 +72,4 @@ public class RyMessageUtils {
         }
     }
 
-    public static void sendConsole(boolean prefix, List<String> messages) {
-        if (prefix) {
-            for (String message : messages) {
-                Bukkit.getConsoleSender().sendMessage(translate(getPrefix() + message));
-            }
-        } else {
-            for (String message : messages) {
-                Bukkit.getConsoleSender().sendMessage(translate(message));
-            }
-        }
-    }
-
-    public static void broadcast(Player player, String permission, String message) {
-        for (Player online : Bukkit.getOnlinePlayers()) {
-            if (online.hasPermission(permission)) {
-                online.sendMessage(translate(player,  message));
-            }
-        }
-    }
-
-    public static void broadcast(Player player, Permission permission, String message) {
-        for (Player online : Bukkit.getOnlinePlayers()) {
-            if (online.hasPermission(permission)) {
-                online.sendMessage(translate(player, message));
-            }
-        }
-    }
-
-    public static void broadcast(Player player, String message) {
-        Bukkit.broadcastMessage(translate(player, message));
-    }
-
-    public static void broadcast(String message) {
-        Bukkit.broadcastMessage(translate(message));
-    }
 }
