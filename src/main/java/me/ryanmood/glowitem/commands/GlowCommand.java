@@ -1,12 +1,10 @@
 package me.ryanmood.glowitem.commands;
 
 import com.cryptomorin.xseries.XMaterial;
-import me.ryanmood.glowitem.GlowItem;
-import me.ryanmood.glowitem.enchantments.Glow;
 import me.ryanmood.glowitem.utils.RyMessageUtils;
 import me.ryanmood.glowitem.utils.commands.Command;
-import org.bukkit.NamespacedKey;
 import org.bukkit.command.CommandSender;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -55,10 +53,7 @@ public class GlowCommand extends Command {
         ItemStack hand = player.getInventory().getItemInMainHand();
         ItemMeta meta = hand.getItemMeta();
 
-        NamespacedKey key = new NamespacedKey(GlowItem.getInstance(), GlowItem.getInstance().getDescription().getName());
-        Glow glow = new Glow(key);
-
-        meta.addEnchant(glow, 1, true);
+        hand.addEnchantment(Enchantment.ARROW_DAMAGE, 1);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 
         hand.setItemMeta(meta);
